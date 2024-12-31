@@ -16,5 +16,9 @@ datasource db {
 model User {
   id String @id @default(cuid())
   email String @unique
-  password String  
+  password String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  
+  @@map("users")
 }
