@@ -8,7 +8,7 @@ export const createUserRoute: FastifyPluginAsync = async (app) => {
 		if (!email || !password)
 			return reply.status(400).send({ error: ["invalid fields"] });
 
-		const user = await createUser({ email, password });
+		const { user } = await createUser({ email, password });
 
 		return reply.send({ user });
 	});
