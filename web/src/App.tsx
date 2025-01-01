@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react"
 
 type DockerResponse = {
-  docker: {
-    status: number,
-    message: string
-  }
+  message: string
 }
 
 function App() {
@@ -12,7 +9,7 @@ function App() {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await fetch("http://localhost:8080").then(res => res.json());
+      const data = await fetch("http://localhost:5000").then(res => res.json());
       console.log(data)
       setData(data)
     }
@@ -21,7 +18,7 @@ function App() {
   }, [])
   return (
     <div>
-      MSG VINDA DO DOCKER: {data?.docker?.message}
+      MSG VINDA DO DOCKER: {data?.message}
     </div>
   )
 }
