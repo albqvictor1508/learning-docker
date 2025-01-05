@@ -1,0 +1,40 @@
+services:
+  pg:
+    image: bitnami/postgresql
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=learning-docker
+  
+  api: 
+    image: api:latest
+    build: ./server
+    ports:
+      - 5000:3333
+    env_file:
+      - ./server/.env
+    depends_on:
+      - pg
+  
+  front:
+    image: front:latest
+    build: ./web
+    volumes:
+      - front-volume:/var/www/html
+    depends_on:
+      - api
+
+  front-nginx: 
+    image: front-nginx:latest
+    build: ./nginx
+    ports:
+      - 81:80
+    volumes:
+      - front-volume:/var/www/html
+    depends_on:
+      - api
+
+volumes:
+  front-volume:
